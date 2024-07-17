@@ -5,7 +5,9 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
@@ -41,6 +43,39 @@ class MainActivity : ComponentActivity() {
 			}
 		}
 	}
+}
+
+@Composable
+fun MyBox(modifier: Modifier = Modifier) {
+	Box(
+		modifier = modifier
+			.background(MaterialTheme.colorScheme.primary)
+			.fillMaxSize(),
+		contentAlignment = Alignment.Center
+	) {
+		Box(
+			modifier = modifier
+				.background(MaterialTheme.colorScheme.secondary)
+				.width(250.dp)
+				.height(250.dp),
+			contentAlignment = Alignment.BottomEnd
+		) {
+			Box(
+				modifier = modifier
+					.background(MaterialTheme.colorScheme.tertiary)
+//					.width(100.dp)
+					.height(100.dp)
+			) {
+				Text(text = "Subscribe please", fontSize = 28.sp)
+			}
+		}
+	}
+}
+
+@Preview(showBackground = true, name = "MyBox")
+@Composable
+private fun MyBoxPrev() {
+	MyBox()
 }
 
 @Composable
