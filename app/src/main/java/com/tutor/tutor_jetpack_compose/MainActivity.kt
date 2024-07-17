@@ -31,7 +31,11 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
+import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -56,6 +60,58 @@ class MainActivity : ComponentActivity() {
 			}
 		}
 	}
+}
+
+@Composable
+fun MyState(modifier: Modifier = Modifier) {
+	val count = remember {
+		mutableIntStateOf(0)
+	}
+	val multipleCount = remember {
+		mutableStateOf(0)
+	}
+
+	fun increment() {
+		count.intValue++
+	}
+
+	fun multipleIncrement() {
+		count.intValue += multipleCount.value
+	}
+
+	fun decrement() {
+		if (count.intValue > 0) {
+			count.intValue--
+		}
+	}
+
+	Column(
+		modifier = modifier.fillMaxSize(),
+		verticalArrangement = Arrangement.Center,
+		horizontalAlignment = Alignment.CenterHorizontally
+	) {
+		TextField(
+			value = multipleCount.value.toString(),
+			onValueChange = { multipleCount.value = it.toInt() })
+		Button(onClick = { decrement() }) {
+			Text(text = "Click Decrement ")
+		}
+
+		Text(text = count.intValue.toString())
+
+		Button(onClick = { increment() }) {
+			Text(text = "Click Increment ")
+		}
+		Button(onClick = { multipleIncrement() }) {
+			Text(text = "Click Increment ${multipleCount.value}")
+		}
+	}
+}
+
+@Preview(showBackground = true, name = "MyState")
+@Composable
+private fun MyStatePrev() {
+	MyState()
 }
 
 @Composable
@@ -95,7 +151,7 @@ fun MyButtonStyle(modifier: Modifier = Modifier) {
 				containerColor = Color.Red,
 				contentColor = Color.Yellow
 			),
-			border = BorderStroke(8.dp,Color.Green),
+			border = BorderStroke(8.dp, Color.Green),
 			onClick = { /*TODO*/ },
 		) {
 			Icon(imageVector = Icons.Default.AddCircle, contentDescription = "Add Circle")
