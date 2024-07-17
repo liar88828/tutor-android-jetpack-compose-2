@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -29,6 +30,8 @@ import androidx.compose.material.icons.filled.AddCircle
 import androidx.compose.material.icons.filled.Email
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -74,6 +77,7 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.app.NotificationCompat.TvExtender
 import com.tutor.tutor_jetpack_compose.ui.theme.TutorjetpackcomposeTheme
 
 class MainActivity : ComponentActivity() {
@@ -88,6 +92,56 @@ class MainActivity : ComponentActivity() {
 						modifier = Modifier.padding(innerPadding)
 					)
 				}
+			}
+		}
+	}
+}
+
+@Preview(showBackground = true)
+@Composable
+private fun MyCardPrev() {
+	Box(
+		modifier = Modifier.fillMaxSize(),
+		contentAlignment = Alignment.Center
+	) {
+		Card(
+			modifier = Modifier
+				.width(200.dp)
+				.height(270.dp),
+//			shape = RoundedCornerShape(20.dp),
+			elevation = CardDefaults.cardElevation(defaultElevation = 5.dp),
+			border = BorderStroke(1.dp, Color.Gray),
+			colors = CardDefaults.cardColors(
+				containerColor = Color.White,
+//				contentColor = Color.Red
+			),
+		) {
+			Column(
+				modifier = Modifier.fillMaxSize()
+			) {
+				Image(
+					painter = painterResource(id = R.drawable.ic_launcher_background),
+					contentDescription = "Is Image",
+					modifier = Modifier
+						.fillMaxWidth()
+						.height(160.dp),
+					contentScale = ContentScale.Crop
+				)
+				Text(
+					text = "Title",
+					fontWeight = FontWeight.Bold,
+					fontSize = 18.sp,
+					modifier = Modifier.padding(horizontal = 10.dp, vertical = 10.dp)
+				)
+				Text(
+					fontWeight = FontWeight.Normal,
+					fontSize = 15.sp,
+					modifier = Modifier.padding(start = 10.dp,),
+					text = "lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+					maxLines = 3,
+					color = Color.LightGray
+
+				)
 			}
 		}
 	}
@@ -403,7 +457,8 @@ fun MyButtonStyle(modifier: Modifier = Modifier) {
 		horizontalAlignment = Alignment.CenterHorizontally
 	) {
 		Button(
-			shape = RoundedCornerShape(topStart = 10.dp, bottomEnd = 10.dp), onClick = { /*TODO*/ },
+			shape = RoundedCornerShape(topStart = 10.dp, bottomEnd = 10.dp),
+			onClick = { /*TODO*/ },
 		) { Text(text = "Rounded corner button") }
 
 
