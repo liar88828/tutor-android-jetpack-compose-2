@@ -12,13 +12,19 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.CutCornerShape
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -77,7 +83,6 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.core.app.NotificationCompat.TvExtender
 import com.tutor.tutor_jetpack_compose.ui.theme.TutorjetpackcomposeTheme
 
 class MainActivity : ComponentActivity() {
@@ -95,6 +100,69 @@ class MainActivity : ComponentActivity() {
 			}
 		}
 	}
+}
+
+val languages = listOf(
+	"Java", "Kotlin", "Python", "C++", "C", "JavaScript", "HTML", "R", "CSS", "PHP", "Go"
+)
+
+@Composable
+fun MyLazyRow(modifier: Modifier = Modifier, lang: List<String>) {
+	Column(modifier = modifier.fillMaxSize()) {
+		LazyRow(contentPadding = PaddingValues(10.dp)) {
+			items(lang) { RowItem(name = it) }
+		}
+
+		LazyColumn(contentPadding = PaddingValues(10.dp)) {
+			items(lang) { ColumnItem(name = it) }
+		}
+	}
+}
+
+@Composable
+fun RowItem(modifier: Modifier = Modifier, name: String) {
+	Card(
+		modifier = modifier
+			.padding(10.dp)
+			.fillMaxWidth()
+			.height(100.dp)
+			.aspectRatio(1.5f),
+		colors = CardDefaults.cardColors(containerColor = Color.White),
+		elevation = CardDefaults.cardElevation(defaultElevation = 10.dp),
+	) {
+		Box(
+			modifier = modifier
+				.padding(10.dp)
+				.fillMaxSize(), contentAlignment = Alignment.Center
+		) {
+			Text(text = name, fontSize = 22.sp, fontWeight = FontWeight.Bold)
+		}
+	}
+}
+
+@Composable
+fun ColumnItem(modifier: Modifier = Modifier, name: String) {
+	Card(
+		modifier = modifier
+			.padding(10.dp)
+			.fillMaxWidth()
+			.wrapContentHeight()
+			.aspectRatio(3f),
+		colors = CardDefaults.cardColors(containerColor = Color.White),
+		elevation = CardDefaults.cardElevation(defaultElevation = 10.dp),
+	) {
+		Box(modifier = modifier
+			.padding(10.dp)
+			.fillMaxSize(), contentAlignment = Alignment.Center) {
+			Text(text = name, fontSize = 22.sp, fontWeight = FontWeight.Bold)
+		}
+	}
+}
+
+@Preview(showBackground = true)
+@Composable
+private fun MyLazyColumnPrev() {
+	MyLazyRow(lang = languages)
 }
 
 @Preview(showBackground = true)
@@ -136,11 +204,10 @@ private fun MyCardPrev() {
 				Text(
 					fontWeight = FontWeight.Normal,
 					fontSize = 15.sp,
-					modifier = Modifier.padding(start = 10.dp,),
+					modifier = Modifier.padding(start = 10.dp),
 					text = "lorem ipsum dolor sit amet, consectetur adipiscing elit.",
 					maxLines = 3,
 					color = Color.LightGray
-
 				)
 			}
 		}
