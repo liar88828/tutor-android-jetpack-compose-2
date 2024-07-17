@@ -26,6 +26,8 @@ import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.CutCornerShape
@@ -86,6 +88,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.tutor.tutor_jetpack_compose.ui.theme.TutorjetpackcomposeTheme
+import kotlin.random.Random
 
 class MainActivity : ComponentActivity() {
 	override fun onCreate(savedInstanceState: Bundle?) {
@@ -100,6 +103,43 @@ class MainActivity : ComponentActivity() {
 					)
 				}
 			}
+		}
+	}
+}
+
+@Preview(showBackground = true)
+@Composable
+private fun MyLazyGrid() {
+	LazyVerticalGrid(
+		columns = GridCells.Fixed(2),
+		contentPadding = PaddingValues(16.dp)
+	) {
+		items(100) {
+//			Text(text = "Item $it", textAlign = TextAlign.Center)
+			MyCardVertical(it, Modifier)
+		}
+	}
+}
+
+@Composable
+fun MyCardVertical(item: Int, modifier: Modifier) {
+	Card(
+		modifier = modifier
+			.size(100.dp)
+			.padding(6.dp),
+		elevation = CardDefaults.cardElevation(defaultElevation = 10.dp),
+		colors = CardDefaults.cardColors(
+			containerColor = Color(
+				Random.nextFloat(),
+				Random.nextFloat(),
+				Random.nextFloat(),
+				1f
+			)
+//				.copy(alpha = 0.5f)
+		)
+	) {
+		Box(modifier = modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+			Text(text = item.toString(), fontSize = 22.sp, fontWeight = FontWeight.Bold)
 		}
 	}
 }
