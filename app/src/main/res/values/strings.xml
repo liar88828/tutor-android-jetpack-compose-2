@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Tutor-jetpack-compose</string>
+    <string name="Hello">Hello World in String</string>
 </resources>

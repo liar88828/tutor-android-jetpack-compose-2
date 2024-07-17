@@ -34,12 +34,23 @@ import androidx.compose.material3.TextButton
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableIntStateOf
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.ParagraphStyle
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.font.Font
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontStyle
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextDecoration
+import androidx.compose.ui.text.style.TextIndent
+import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -63,12 +74,63 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
+fun MyTextStyle(modifier: Modifier = Modifier) {
+	Column {
+		Text(text = buildAnnotatedString {
+			withStyle(
+				style = ParagraphStyle(
+					textIndent = TextIndent(firstLine = 20.sp)
+				)
+			) {
+				withStyle(style = SpanStyle(color = Color.Red, fontSize = 30.sp)) {
+					append("H")
+				}
+				append("ello ")
+				withStyle(style = SpanStyle(color = Color.Green, fontSize = 30.sp)) {
+					append("W")
+				}
+				append("orld")
+			}
+			append("Variusaenean Ligulafames Lectustorquent Ligulainterdum")
+		})
+
+
+
+		Text(
+			text = stringResource(id = R.string.Hello).repeat(30),
+			modifier = modifier
+				.background(MaterialTheme.colorScheme.error)
+				.width(200.dp),
+			color = MaterialTheme.colorScheme.primary,
+			style = MaterialTheme.typography.bodyLarge,
+			fontStyle = FontStyle.Italic,
+			fontWeight = FontWeight.Bold,
+			fontSize = 25.sp,
+//		fontFamily = FontFamily.Cursive
+			fontFamily = FontFamily(Font(R.font.poppins)),
+			textDecoration = TextDecoration.LineThrough,
+			textAlign = TextAlign.Justify,
+			lineHeight = 40.sp,
+			overflow = TextOverflow.Ellipsis,
+			maxLines = 7
+		)
+	}
+
+}
+
+@Preview(showBackground = true, name = "MyTextStylePrev")
+@Composable
+private fun MyTextStylePrev() {
+	MyTextStyle()
+}
+
+@Composable
 fun MyState(modifier: Modifier = Modifier) {
 	val count = remember {
 		mutableIntStateOf(0)
 	}
 	val multipleCount = remember {
-		mutableStateOf(0)
+		mutableIntStateOf(0)
 	}
 
 	fun increment() {
@@ -76,7 +138,7 @@ fun MyState(modifier: Modifier = Modifier) {
 	}
 
 	fun multipleIncrement() {
-		count.intValue += multipleCount.value
+		count.intValue += multipleCount.intValue
 	}
 
 	fun decrement() {
@@ -91,8 +153,8 @@ fun MyState(modifier: Modifier = Modifier) {
 		horizontalAlignment = Alignment.CenterHorizontally
 	) {
 		TextField(
-			value = multipleCount.value.toString(),
-			onValueChange = { multipleCount.value = it.toInt() })
+			value = multipleCount.intValue.toString(),
+			onValueChange = { multipleCount.intValue = it.toInt() })
 		Button(onClick = { decrement() }) {
 			Text(text = "Click Decrement ")
 		}
@@ -103,7 +165,7 @@ fun MyState(modifier: Modifier = Modifier) {
 			Text(text = "Click Increment ")
 		}
 		Button(onClick = { multipleIncrement() }) {
-			Text(text = "Click Increment ${multipleCount.value}")
+			Text(text = "Click Increment ${multipleCount.intValue}")
 		}
 	}
 }
@@ -280,7 +342,7 @@ fun FirstApp(modifier: Modifier = Modifier) {
 }
 
 @Composable
-fun TestComp(modifier: Modifier = Modifier, text: String) {
+fun TestComp(text: String) {
 	Text(
 		text = text, fontSize = 32.sp,
 		style = MaterialTheme.typography.bodyLarge,
