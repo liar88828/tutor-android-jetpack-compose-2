@@ -4,24 +4,29 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Edit
+import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.filled.Share
+import androidx.compose.material.icons.filled.ShoppingCart
 import androidx.compose.material.icons.outlined.Home
 import androidx.compose.material.icons.outlined.Person
 import androidx.compose.material.icons.outlined.Search
 import androidx.compose.material.icons.outlined.Settings
 import androidx.compose.material3.Badge
 import androidx.compose.material3.BadgedBox
+import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
@@ -93,9 +98,43 @@ fun MyScaffold(modifier: Modifier = Modifier) {
 
 	Scaffold(
 		topBar = { MyTopBar(bottomNavigation = bottomNavigation.intValue) },
-		bottomBar = { BottomNavigationBar(bottomNavigation) },
-		floatingActionButton = { FloatingActionButtonBar() },
+		bottomBar = { MyBottomAppBar() },
+//		bottomBar = { BottomNavigationBar(bottomNavigation) },
+//		floatingActionButton = { MyFloatingActionButton() },
 	) { paddingValues -> MainScreen(paddingValues, bottomNavigation.intValue) }
+}
+
+@Composable
+fun MyBottomAppBar(modifier: Modifier = Modifier) {
+//	BottomNavigationBar
+	BottomAppBar(
+		modifier = modifier
+			.padding(10.dp)
+			.clip(RoundedCornerShape(20.dp)),
+		containerColor = MaterialTheme.colorScheme.background,
+	) {
+		Row(
+			modifier = modifier.fillMaxWidth(),
+			verticalAlignment = Alignment.CenterVertically,
+			horizontalArrangement = Arrangement.SpaceAround,
+		) {
+			IconButton(onClick = { /*TODO*/ }) {
+				Icon(imageVector = Icons.Default.Home, contentDescription = "Icon Home")
+			}
+			IconButton(onClick = { /*TODO*/ }) {
+				Icon(imageVector = Icons.Default.Email, contentDescription = "Icon Email")
+			}
+
+			MyFloatingActionButton()
+
+			IconButton(onClick = { /*TODO*/ }) {
+				Icon(imageVector = Icons.Default.Edit, contentDescription = "Edit Icon")
+			}
+			IconButton(onClick = { /*TODO*/ }) {
+				Icon(imageVector = Icons.Default.ShoppingCart, contentDescription = "Shopping Icon")
+			}
+		}
+	}
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -166,8 +205,23 @@ private fun MainScreen(
 }
 
 @Composable
-private fun FloatingActionButtonBar() {
-	FloatingActionButton(onClick = { /*TODO*/ }) {
+private fun MyFloatingActionButton() {
+	FloatingActionButton(
+		onClick = { /*TODO*/ },
+//		shape = RoundedCornerShape(
+//			topStart = 25.dp,
+//			topEnd = 25.dp,
+//			bottomStart = 25.dp,
+//			bottomEnd = 5.dp,
+//		),
+		shape = RoundedCornerShape(
+			topStart = 10.dp,
+			topEnd = 10.dp,
+			bottomStart = 10.dp,
+			bottomEnd = 10.dp,
+		),
+		containerColor = MaterialTheme.colorScheme.primary
+	) {
 		Icon(imageVector = Icons.Default.Search, contentDescription = "Search Icon")
 	}
 }
