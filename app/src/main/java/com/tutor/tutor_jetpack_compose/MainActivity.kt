@@ -39,6 +39,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TextField
+import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
@@ -86,6 +87,54 @@ class MainActivity : ComponentActivity() {
 			}
 		}
 	}
+}
+
+@Preview
+@Composable
+private fun StylingTextField() {
+	Box(
+		modifier = Modifier
+			.fillMaxSize()
+			.background(Color.LightGray)
+			.padding(top = 40.dp),
+		contentAlignment = Alignment.Center
+	) {
+		val textState = remember { mutableStateOf("") }
+		val myColor = Color.Red
+
+		TextField(
+			modifier = Modifier.padding(top = 20.dp),
+			label = { Text(text = "Enter your name") },
+			leadingIcon = {
+				Icon(
+					imageVector = Icons.Default.Email,
+					contentDescription = "Email Icon"
+				)
+			},
+			trailingIcon = {
+				Icon(
+					imageVector = Icons.Default.AddCircle,
+					contentDescription = "Add Circle"
+				)
+			},
+			colors = TextFieldDefaults.colors(
+				unfocusedTextColor = Color.Red,
+				focusedTextColor = Color.Blue,
+				cursorColor = Color.Yellow,
+//				textState = Color.Green,
+				focusedIndicatorColor = Color.Red,
+				unfocusedIndicatorColor = Color.Blue,
+				focusedLabelColor = Color.Red,
+				unfocusedLabelColor = Color.Blue,
+				focusedContainerColor = Color.Blue,
+				unfocusedContainerColor = Color.Red
+			),
+			shape = RoundedCornerShape(topStart = 10.dp, bottomEnd = 10.dp),
+			value = textState.value,
+			onValueChange = { textState.value = it }
+		)
+	}
+
 }
 
 @Preview(showBackground = true)
