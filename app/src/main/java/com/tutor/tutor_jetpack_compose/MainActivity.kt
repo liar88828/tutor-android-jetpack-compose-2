@@ -6,7 +6,9 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -19,7 +21,6 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.CutCornerShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.text.BasicText
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
@@ -46,10 +47,13 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.ParagraphStyle
 import androidx.compose.ui.text.SpanStyle
@@ -87,6 +91,55 @@ class MainActivity : ComponentActivity() {
 			}
 		}
 	}
+}
+
+@Preview(showBackground = true)
+@Composable
+private fun MyImagePrev() {
+	Column(
+		modifier = Modifier.fillMaxSize(),
+		verticalArrangement = Arrangement.Center,
+		horizontalAlignment = Alignment.CenterHorizontally
+	) {
+		Image(
+			modifier = Modifier
+				.padding(10.dp)
+				.size(200.dp)
+				.clip(CutCornerShape(20.dp))
+				.border(2.dp, Color.Red, shape = CutCornerShape(20.dp)),
+			alignment = Alignment.Center,
+			painter = painterResource(id = R.drawable.ic_launcher_background),
+			contentDescription = "My Image",
+			contentScale = ContentScale.Crop,
+			alpha = 0.5f// blur
+		)
+		Image(
+			modifier = Modifier
+				.padding(10.dp)
+				.size(200.dp)
+				.clip(CircleShape)
+				.border(2.dp, Color.Red, shape = CircleShape),
+			alignment = Alignment.Center,
+			painter = painterResource(id = R.drawable.ic_launcher_background),
+			contentDescription = "My Image",
+			contentScale = ContentScale.Crop,
+			alpha = 0.5f// blur
+		)
+
+		Image(
+			modifier = Modifier
+				.padding(10.dp)
+				.size(200.dp)
+				.clip(RoundedCornerShape(20.dp))
+				.border(2.dp, Color.Red, shape = RoundedCornerShape(20.dp)),
+			alignment = Alignment.Center,
+			painter = painterResource(id = R.drawable.ic_launcher_background),
+			contentDescription = "My Image",
+			contentScale = ContentScale.Crop,
+			alpha = 0.5f// blur
+		)
+	}
+
 }
 
 @Preview
