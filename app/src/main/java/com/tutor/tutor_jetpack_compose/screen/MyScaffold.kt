@@ -1,16 +1,21 @@
 package com.tutor.tutor_jetpack_compose.screen
 
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.Settings
+import androidx.compose.material.icons.filled.Share
 import androidx.compose.material.icons.outlined.Home
 import androidx.compose.material.icons.outlined.Person
 import androidx.compose.material.icons.outlined.Search
@@ -20,6 +25,7 @@ import androidx.compose.material3.BadgedBox
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
@@ -27,6 +33,7 @@ import androidx.compose.material3.NavigationBarItemDefaults
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableIntState
 import androidx.compose.runtime.mutableIntStateOf
@@ -80,22 +87,68 @@ data class NavigationState(
 	val badgeCount: Int,
 )
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MyScaffold(modifier: Modifier = Modifier) {
 	val bottomNavigation = rememberSaveable { mutableIntStateOf(0) }
 
 	Scaffold(
-		topBar = { TopAppBar(title = { Text(text = "Top Bar") }) },
+		topBar = { MyTopBar(bottomNavigation = bottomNavigation.intValue) },
 		bottomBar = { BottomNavigationBar(bottomNavigation) },
 		floatingActionButton = { FloatingActionButtonBar() },
-	) { paddingValues -> MainScreen(paddingValues, bottomNavigation) }
+	) { paddingValues -> MainScreen(paddingValues, bottomNavigation.intValue) }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+private fun MyTopBar(modifier: Modifier = Modifier, bottomNavigation: Int) {
+	TopAppBar(
+		modifier = modifier
+			.padding(10.dp)
+			.clip(RoundedCornerShape(20.dp)),
+		title = {
+			Box(
+				modifier = modifier.fillMaxWidth(),
+				contentAlignment = Alignment.TopStart
+			) {
+				Text(text = navigationItems[bottomNavigation].title)
+			}
+		},
+		navigationIcon = {
+			IconButton(onClick = { /*TODO*/ }) {
+				Icon(
+					imageVector = Icons.Default.Menu,
+					contentDescription = "Menu Icon"
+				)
+			}
+		},
+		actions = {
+			IconButton(onClick = { /*TODO*/ }) {
+				BadgedBox(badge = {
+					Badge(modifier = modifier.size(10.dp)) { Text(text = "") }
+				}) {
+					Icon(
+						imageVector = Icons.Default.Share,
+						contentDescription = "Setting Icon"
+					)
+				}
+			}
+			IconButton(onClick = { /*TODO*/ }) {
+				Icon(
+					imageVector = Icons.Default.Settings,
+					contentDescription = "Setting Icon"
+				)
+			}
+		},
+		colors = TopAppBarDefaults.topAppBarColors(
+			containerColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.5f),
+		)
+	)
 }
 
 @Composable
 private fun MainScreen(
 	paddingValues: PaddingValues,
-	bottomNavigation: MutableIntState
+	bottomNavigation: Int
 ) {
 	Column(
 		modifier = Modifier
@@ -105,7 +158,7 @@ private fun MainScreen(
 		horizontalAlignment = Alignment.CenterHorizontally
 	) {
 		Text(
-			text = navigationItems[bottomNavigation.intValue].title,
+			text = navigationItems[bottomNavigation].title,
 			fontSize = 30.sp,
 			fontWeight = FontWeight.Bold
 		)
