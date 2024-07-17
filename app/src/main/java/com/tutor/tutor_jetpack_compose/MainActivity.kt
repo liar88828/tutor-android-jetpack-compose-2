@@ -1,6 +1,7 @@
 package com.tutor.tutor_jetpack_compose
 
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -18,8 +19,13 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.CutCornerShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.BasicText
+import androidx.compose.foundation.text.BasicTextField
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AddCircle
+import androidx.compose.material.icons.filled.Email
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.HorizontalDivider
@@ -27,6 +33,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -34,10 +41,14 @@ import androidx.compose.material3.TextButton
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.ParagraphStyle
 import androidx.compose.ui.text.SpanStyle
@@ -46,6 +57,10 @@ import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardCapitalization
+import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.style.TextIndent
@@ -69,6 +84,106 @@ class MainActivity : ComponentActivity() {
 					)
 				}
 			}
+		}
+	}
+}
+
+@Preview(showBackground = true)
+@Composable
+private fun MyStyleTextFieldAndToast() {
+	val newText = remember {
+		mutableStateOf("")
+	}
+	val context = LocalContext.current
+	val keyboardController = LocalSoftwareKeyboardController.current
+	val focusManager = LocalFocusManager.current
+	Box(
+		modifier = Modifier.fillMaxSize(),
+		contentAlignment = Alignment.Center
+	) {
+		Column(verticalArrangement = Arrangement.spacedBy(25.dp)) {
+			OutlinedTextField(
+				label = { Text(text = "Enter your name") },
+				placeholder = { Text(text = "Is Placeholder") },
+				maxLines = 2,
+				singleLine = true,
+				modifier = Modifier.width(300.dp),
+//				visualTransformation = PasswordVisualTransformation(),
+				leadingIcon = {
+					Icon(imageVector = Icons.Default.Email, contentDescription = "Email Icon")
+				},
+				trailingIcon = {
+					IconButton(onClick = {
+						Toast.makeText(context, newText.value, Toast.LENGTH_SHORT).show()
+					}) {
+						Icon(
+							imageVector = Icons.Default.AddCircle,
+							contentDescription = "Add Circle"
+						)
+					}
+				},
+				value = newText.value,
+				onValueChange = { newText.value = it },
+				keyboardOptions = KeyboardOptions(
+					capitalization = KeyboardCapitalization.Characters,
+					keyboardType = KeyboardType.Phone,
+					imeAction = ImeAction.Next
+				),
+				keyboardActions = KeyboardActions(
+//					onNext = {
+////						keyboardController?.hide()
+//					}
+				)
+//				keyboardType = KeyboardType.Email
+			)
+
+
+
+			TextField(
+				label = { Text(text = "Enter your name") },
+				placeholder = { Text(text = "Is Placeholder") },
+				maxLines = 2,
+				singleLine = true,
+				modifier = Modifier.width(300.dp),
+				visualTransformation = PasswordVisualTransformation(), leadingIcon = {
+					Icon(imageVector = Icons.Default.Email, contentDescription = "Email Icon")
+				},
+				trailingIcon = {
+					IconButton(onClick = {
+						Toast.makeText(context, newText.value, Toast.LENGTH_SHORT).show()
+					}) {
+						Icon(
+							imageVector = Icons.Default.AddCircle,
+							contentDescription = "Add Circle"
+						)
+					}
+				},
+				value = newText.value, onValueChange = { newText.value = it },
+				keyboardOptions = KeyboardOptions(
+					capitalization = KeyboardCapitalization.Characters,
+					keyboardType = KeyboardType.Text,
+					imeAction = ImeAction.Send
+				),
+				keyboardActions = KeyboardActions(
+					onSend = {
+//						will hide keyboard
+						keyboardController?.hide()
+//						send toast
+						Toast.makeText(context, newText.value, Toast.LENGTH_SHORT).show()
+//				close text field
+						focusManager.clearFocus()
+					}
+				))
+
+
+			BasicTextField(
+				modifier = Modifier
+					.width(300.dp)
+					.background(Color.LightGray),
+				value = "Hello",
+				onValueChange = {})
+
+			Text(text = newText.value)
 		}
 	}
 }
