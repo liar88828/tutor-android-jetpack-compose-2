@@ -13,7 +13,6 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
@@ -23,7 +22,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
-import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.grid.GridCells
@@ -144,86 +142,8 @@ fun MyCardVertical(item: Int, modifier: Modifier) {
 	}
 }
 
-val imageId = arrayOf(
-	R.drawable.ic_launcher_background,
-	R.drawable.ic_launcher_foreground,
-	R.drawable.ic_launcher_background,
-	R.drawable.ic_launcher_foreground,
-	R.drawable.ic_launcher_background,
-	R.drawable.ic_launcher_foreground
-)
-val names = arrayOf(
-	"Peperoni",
-	"Vegan",
-	"FourCheese",
-	"Margaritta",
-	"American",
-	"Mexican"
-)
-val ingredients = arrayOf(
-	"Tomato sos, cheese, oregano, peperoni",
-	"Tomato sos, cheese, oregano, spinach, green paprika, rukola",
-	"Tomato sos, oregano, mozzarella, goda, parmesan, cheddar",
-	"Tomato sos, cheese, oregano, bazillion",
-	"Tomato sos, cheese, oregano, green paprika, red beans",
-	"Tomato sos, cheese, oregano, corn, jalapeno, chicken"
-)
 
-data class PizzaItem(
-	val imageId: Int,
-	val name: String,
-	val ingredients: String
-)
 
-val pizzaItems = imageId.indices.map { index ->
-	PizzaItem(
-		imageId = imageId[index],
-		name = names[index],
-		ingredients = ingredients[index]
-	)
-}
-
-@Composable
-fun MyPizzaItem(item: PizzaItem, modifier: Modifier) {
-	Card(
-		modifier = modifier
-			.padding(10.dp)
-			.wrapContentSize(),
-		colors = CardDefaults.cardColors(containerColor = Color.White),
-		elevation = CardDefaults.cardElevation(defaultElevation = 10.dp),
-	) {
-		Row(
-			modifier = modifier.fillMaxWidth(),
-			verticalAlignment = Alignment.CenterVertically,
-			horizontalArrangement = Arrangement.SpaceBetween
-		) {
-			Image(
-				painter = painterResource(id = item.imageId),
-				contentDescription = item.name,
-				modifier = modifier.size(140.dp)
-			)
-			Column(modifier = modifier.padding(10.dp)) {
-				Text(text = item.name, fontWeight = FontWeight.Bold, fontSize = 24.sp)
-				Text(text = item.ingredients, fontWeight = FontWeight.Bold, fontSize = 18.sp)
-			}
-		}
-	}
-}
-
-@Composable
-private fun MyImagePizzas(pizzaItems: List<PizzaItem>, modifier: Modifier = Modifier) {
-	LazyColumn(contentPadding = PaddingValues(16.dp)) {
-		items(pizzaItems) {
-			MyPizzaItem(item = it, modifier = modifier)
-		}
-	}
-}
-
-@Preview(showBackground = true)
-@Composable
-private fun MyImageListPrev() {
-	MyImagePizzas(pizzaItems = pizzaItems)
-}
 
 val languages = listOf(
 	"Java", "Kotlin", "Python", "C++", "C", "JavaScript", "HTML", "R", "CSS", "PHP", "Go"
@@ -288,55 +208,6 @@ fun ColumnItem(modifier: Modifier = Modifier, name: String) {
 @Composable
 private fun MyLazyColumnPrev() {
 	MyLazyRow(lang = languages)
-}
-
-@Preview(showBackground = true)
-@Composable
-private fun MyCardPrev() {
-	Box(
-		modifier = Modifier.fillMaxSize(),
-		contentAlignment = Alignment.Center
-	) {
-		Card(
-			modifier = Modifier
-				.width(200.dp)
-				.height(270.dp),
-//			shape = RoundedCornerShape(20.dp),
-			elevation = CardDefaults.cardElevation(defaultElevation = 5.dp),
-			border = BorderStroke(1.dp, Color.Gray),
-			colors = CardDefaults.cardColors(
-				containerColor = Color.White,
-//				contentColor = Color.Red
-			),
-		) {
-			Column(
-				modifier = Modifier.fillMaxSize()
-			) {
-				Image(
-					painter = painterResource(id = R.drawable.ic_launcher_background),
-					contentDescription = "Is Image",
-					modifier = Modifier
-						.fillMaxWidth()
-						.height(160.dp),
-					contentScale = ContentScale.Crop
-				)
-				Text(
-					text = "Title",
-					fontWeight = FontWeight.Bold,
-					fontSize = 18.sp,
-					modifier = Modifier.padding(horizontal = 10.dp, vertical = 10.dp)
-				)
-				Text(
-					fontWeight = FontWeight.Normal,
-					fontSize = 15.sp,
-					modifier = Modifier.padding(start = 10.dp),
-					text = "lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-					maxLines = 3,
-					color = Color.LightGray
-				)
-			}
-		}
-	}
 }
 
 @Preview(showBackground = true)
