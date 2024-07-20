@@ -1,6 +1,7 @@
 plugins {
 	alias(libs.plugins.android.application)
 	alias(libs.plugins.jetbrains.kotlin.android)
+	kotlin("kapt")
 }
 
 android {
@@ -68,4 +69,11 @@ dependencies {
 
 	implementation(libs.androidx.navigation.compose)
 	implementation(libs.lottie.compose)
+//
+	// Room
+	implementation(libs.androidx.room.ktx)
+	kapt(libs.androidx.room.compiler)
+// LiveData
+	implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.2.0")
+
 }
