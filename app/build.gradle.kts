@@ -74,6 +74,7 @@ dependencies {
 	implementation(libs.androidx.room.ktx)
 	kapt(libs.androidx.room.compiler)
 // LiveData
-	implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.2.0")
-
+	implementation(libs.androidx.lifecycle.livedata.ktx)
+//	coil
+	implementation(libs.coil.compose)
 }
