@@ -29,7 +29,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.room.Room
-import com.tutor.tutor_jetpack_compose.imageSelect.MyImageScreen
+import com.tutor.tutor_jetpack_compose.multiple_screen_support.ProfileScreen
 import com.tutor.tutor_jetpack_compose.room_database.TodoListScreen
 import com.tutor.tutor_jetpack_compose.room_database.TodoListScreenData
 import com.tutor.tutor_jetpack_compose.room_database.roomDb.Note
@@ -71,8 +71,9 @@ class MainActivity : ComponentActivity() {
 							.padding(innerPadding),
 						color = MaterialTheme.colorScheme.background
 					) {
-						RoomDataBaseScreen(viewModel)
-						MyImageScreen()
+//						RoomDataBaseScreen(viewModel)
+//						MyImageScreen()
+						ProfileScreen()
 					}
 				}
 			}
@@ -81,6 +82,12 @@ class MainActivity : ComponentActivity() {
 
 	@Composable
 	private fun RoomDataBaseScreen(viewModel: NoteViewModel) {
+		var noteHandler = notes(viewModel)
+		TodoListScreen(noteHandler)
+	}
+
+	@Composable
+	private fun notes(viewModel: NoteViewModel): TodoListScreenData {
 		var noteList by remember { mutableStateOf(listOf<Note>()) }
 		viewModel.getNotes().observe(this) { noteList = it }
 
@@ -91,14 +98,12 @@ class MainActivity : ComponentActivity() {
 		fun handlerDelete(note: Note) {
 			viewModel.deleteNote(note)
 		}
-
-		TodoListScreen(
-			TodoListScreenData(
-				noteList,
-				handlerDelete = ::handlerDelete,
-				handlerCreate = ::handlerCreate
-			)
+		return TodoListScreenData(
+			noteList,
+			handlerDelete = ::handlerDelete,
+			handlerCreate = ::handlerCreate
 		)
+
 	}
 
 	@Composable
